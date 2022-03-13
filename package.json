@@ -1,0 +1,17 @@
+{
+  "name": "codepen-clone",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivteplo/codepen-clone.git"
+  },
+  "author": "Ivan Teplov <iteplov7@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ivteplo/codepen-clone/issues"
+  },
+  "homepage": "https://github.com/ivteplo/codepen-clone#readme"
+}
