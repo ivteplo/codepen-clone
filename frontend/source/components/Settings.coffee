@@ -19,15 +19,18 @@ export Settings = ->
       console.error error
 
   <div className="Settings column">
-    <h1>Settings</h1>
+    <h2 style={{ marginBottom: "1rem" }}>Settings</h2>
 
-    <EditorContextProvider files={{
-      settings:
-        name: "settings.json"
-        language: "json"
-        value: settingsJSON
-    }} onSave={onSave}>
-      <Editor initialFile="settings"></Editor>
+    <EditorContextProvider
+      files={{
+        settings:
+          name: "settings.json"
+          language: "json"
+          value: settingsJSON
+      }}
+      onSave={onSave}
+    >
+      <Editor initialFile="settings" height="calc(75vh - 6rem)"></Editor>
     </EditorContextProvider>
   </div>
 

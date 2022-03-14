@@ -8,7 +8,7 @@ import usePreferredMode from "../hooks/usePreferredMode"
 
 import "./Editor.css"
 
-export Editor = ({ initialFile }) ->
+export Editor = ({ initialFile, height }) ->
   { files, editorSettings, saveFile } = React.useContext EditorContext
   theme = usePreferredMode()
   editorTheme = if theme == "light" then "light" else "vs-dark"
@@ -45,7 +45,7 @@ export Editor = ({ initialFile }) ->
       </nav>
     }
     <MonacoEditor
-      height="40vh"
+      height={height}
       path={file.name}
       language={file.language}
       defaultValue={file.value}
