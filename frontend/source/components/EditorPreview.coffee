@@ -1,14 +1,17 @@
 # Copyright (c) 2022 Ivan Teplov
 
 import React from "react"
-import "./EditorPreview.css"
 import classNames from "classnames"
+
+import { EditorContext } from "../contexts/EditorContext"
+import "./EditorPreview.css"
 
 encodeFile = (contentType, contents) ->
   "data:#{contentType};base64,#{btoa contents}"
 
-export EditorPreview = ({ files, className, ...props }) ->
+export EditorPreview = ({ className, ...props }) ->
   # TODO: add support for displaying console messages in a separate 'popup'
+  { files } = React.useContext EditorContext
 
   css = encodeFile "text/css", files.CSS.value
 

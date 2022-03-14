@@ -9,6 +9,13 @@
   --primary: #4d4bf1;
   --danger: #c05757;
   --success: #46a146;
+  --transition-duration: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-duration: 0;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

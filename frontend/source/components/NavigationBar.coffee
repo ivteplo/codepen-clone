@@ -2,13 +2,25 @@
 
 import React from "react"
 import "./NavigationBar.css"
+import classNames from "classnames"
 
-export NavigationBar = ->
-  <nav className="NavigationBar row">
+export NavigationBar = ({ onOpenSettings, className, ...props }) ->
+  classes = classNames "NavigationBar row", className
+
+  openSettings = ->
+    onOpenSettings() if onOpenSettings instanceof Function
+
+  <nav className={classes}>
     <h1>Code</h1>
 
     <div className="row NavigationBarMenu">
-      <button className="primary" type="button">Settings</button>
+      <button
+        onClick={openSettings}
+        className="primary"
+        type="button"
+      >
+        Settings
+      </button>
     </div>
   </nav>
 

@@ -1,0 +1,72 @@
+/* Copyright (c) 2022 Ivan Teplov */
+
+.Sheet {
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 999;
+
+  transition: var(--transition-duration) ease;
+}
+
+.Sheet.open {
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+
+.SheetOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: #0008;
+}
+
+.SheetContents {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  max-height: 100vh;
+  padding: 1rem;
+  border-radius: 1rem 1rem 0 0;
+  background: var(--background);
+  overflow-y: auto;
+  min-height: 50vh;
+}
+
+@media (min-width: 50rem) {
+  .SheetContents {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    min-height: auto !important;
+    max-height: 90vh;
+    max-width: 90vw;
+    border-radius: 1rem;
+  }
+}
+
+.SheetCloseButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: transparent;
+  color: inherit;
+  padding: 1rem 1rem 0.5rem 0.5rem;
+  font-size: 1.5rem;
+}
+

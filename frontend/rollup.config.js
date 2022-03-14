@@ -22,7 +22,8 @@ export default {
         presets: ["@babel/preset-react"],
         sourceMaps: !production
       },
-      sourceMap: !production
+      sourceMap: !production,
+      include: "source/**/*.coffee"
     }),
 
     // we'll extract any component CSS out into
@@ -34,15 +35,18 @@ export default {
       extensions
     }),
 
-    commonjs({ extensions }),
+    commonjs({
+      extensions,
+      sourceMap: false
+    }),
 
     injectProcessEnv({
       NODE_ENV: production ? "production" : "development",
     }),
 
-    // Watch the `public` directory and refresh the
-    // browser on changes when not in production
-    !production && livereload("public"),
+    // // Watch the `public` directory and refresh the
+    // // browser on changes when not in production
+    // !production && livereload("public"),
 
     production && terser(),
   ],

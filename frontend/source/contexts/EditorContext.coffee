@@ -3,27 +3,37 @@
 import React from "react"
 
 defaultContext =
-  files:
-    HTML:
-      name: "index.html"
-      language: "html"
-      value: "<h1>Hello, world!</h1>"
-    CSS:
-      name: "index.css"
-      language: "css"
-      value: "body {\n\tfont-family: sans-serif;\n}"
-    JavaScript:
-      name: "main.js"
-      language: "javascript"
-      value: "console.log('hello, world!')"
+  files: {}
+  editorSettings:
+    tabSize: 2
+    fontSize: 14
+    fontFamily: "JetBrains Mono, Hack, Cascadia Code, SF Mono, Consolas, 'Courier New', monospace"
+    fontLigatures: on
+    mouseWheelZoom: on
   saveFile: () -> return
+  saveEditorSettings: () -> return
 
 export EditorContext = React.createContext defaultContext
 
-export EditorContextProvider = ({ children }) ->
-  [ files, setFiles ] = React.useState defaultContext.files
+export EditorContextProvider = ({
+  files: _files = {},
+  editorSettings: _editorSettings = defaultContext.editorSettings,
+  onSave,
+  children
+}) ->
+  [ files, setFiles ] = React.useState _files
+  [ editorSettings, setEditorSettings ] = React.useState {
+    ...defaultContext.editorSettings,
+    ..._editorSettings
+  }
 
   saveTimeoutID = null
+
+  saveEditorSettings = (settings) ->
+    setEditorSettings settings
+    onSave({
+      editorSettings: settings
+    }) if onSave instanceof Function
 
   saveFile = (mode, contents) ->
     files = {
@@ -40,9 +50,17 @@ export EditorContextProvider = ({ children }) ->
     save = ->
       setFiles files
       saveTimeoutID = null
+      onSave({ files }) if onSave instanceof Function
 
     saveTimeoutID = setTimeout save, 1000
 
-  <EditorContext.Provider value={{ files, saveFile }}>
+  context = {
+    files,
+    editorSettings,
+    saveFile,
+    saveEditorSettings
+  }
+
+  <EditorContext.Provider value={context}>
     {children}
   </EditorContext.Provider>

@@ -3,20 +3,12 @@
 import React, { useState, useContext, createContext } from "react"
 import { EditorContext } from "../contexts/EditorContext"
 import MonacoEditor from "@monaco-editor/react"
-import EditorPreview from "./EditorPreview"
 import "./Editor.css"
 
-editorSettings =
-  tabSize: 2
-  fontSize: 14
-  fontFamily: "JetBrains Mono, Hack, Cascadia Code, SF Mono, Consolas, 'Courier New', monospace"
-  fontLigatures: on
-  mouseWheelZoom: on
+export Editor = ({ initialFile }) ->
+  { files, editorSettings, saveFile } = useContext EditorContext
 
-export Editor = ->
-  { files, saveFile } = useContext EditorContext
-
-  [currentMode, setCurrentMode] = useState "HTML"
+  [currentMode, setCurrentMode] = useState initialFile
   file = files[currentMode]
 
   onChange = (newCode) ->
@@ -25,34 +17,36 @@ export Editor = ->
   changeTab = (mode) ->
     setCurrentMode mode
 
-  <div className="column fill">
-    <nav className="EditorTabs row">
-      {
-        Object.keys(files).map((key) ->
-          currentFile = file
+  <div className="Editor column fill">
+    {
+      Object.keys(files).length > 1 and
+      <nav className="EditorTabs row">
+        {
+          Object.keys(files).map((key) ->
+            currentFile = file
 
-          do (file = files[key]) ->
-            <button
-              type="button"
-              disabled={file.name == currentFile.name}
-              key={key}
-              onClick={changeTab.bind(this, key)}
-              className="gray"
-            >
-              {key}
-            </button>
-        )
-      }
-    </nav>
+            do (file = files[key]) ->
+              <button
+                type="button"
+                disabled={file.name == currentFile.name}
+                key={key}
+                onClick={changeTab.bind(this, key)}
+                className="gray"
+              >
+                {key}
+              </button>
+          )
+        }
+      </nav>
+    }
     <MonacoEditor
-      height="50%"
+      height="40vh"
       path={file.name}
       language={file.language}
-      value={file.value}
+      defaultValue={file.value}
       onChange={onChange}
       options={editorSettings}
     />
-    <EditorPreview files={files} />
   </div>
 
 export default Editor
