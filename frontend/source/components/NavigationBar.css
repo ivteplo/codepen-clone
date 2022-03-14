@@ -1,0 +1,7 @@
+/* Copyright (c) 2022 Ivan Teplov */
+
+.NavigationBar {
+  padding: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}

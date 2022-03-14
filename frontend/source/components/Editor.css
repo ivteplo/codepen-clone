@@ -1,0 +1,7 @@
+/* Copyright (c) 2022 Ivan Teplov */
+
+.EditorTabs > button {
+  border-radius: 0;
+  border: none !important;
+  flex-grow: 1;
+}
