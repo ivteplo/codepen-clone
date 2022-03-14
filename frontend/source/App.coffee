@@ -2,6 +2,9 @@
 
 import React from "react"
 import localForage from "localForage"
+import classNames from "classnames"
+
+import useEditorOrientation from "./hooks/useEditorOrientation"
 
 import NavigationBar from "./components/NavigationBar"
 import EditorPreview from "./components/EditorPreview"
@@ -15,6 +18,11 @@ export App = ->
   [isSettingsModalOpen, setIsSettingsModalOpen] = React.useState no
   [editorSettings, setEditorSettings] = React.useState undefined
   [loadedSettings, setLoadedSettings] = React.useState no
+
+  orientation = useEditorOrientation()
+
+  editorWrapperClasses = classNames "fill", orientation
+  editorHeight = if orientation == "row" then "89%" else "50%"
 
   loadEditorSettings = ->
     setEditorSettings await localForage.getItem "editorSettings"
@@ -55,8 +63,10 @@ export App = ->
         editorSettings={editorSettings}
         onSave={onSave}
       >
-        <Editor initialFile="HTML" />
-        <EditorPreview />
+        <div className={editorWrapperClasses}>
+          <Editor initialFile="HTML" height={editorHeight} />
+          <EditorPreview />
+        </div>
 
         <Sheet
           isOpen={isSettingsModalOpen}
