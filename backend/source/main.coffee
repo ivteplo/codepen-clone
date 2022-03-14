@@ -2,6 +2,7 @@
 
 bodyParser = require "body-parser"
 express = require "express"
+router = require "./router"
 morgan = require "morgan"
 path = require "path"
 
@@ -16,6 +17,8 @@ app.use morgan("dev")
 
 # Parse requests body that are in JSON format
 app.use bodyParser.json()
+
+app.use "/api/", router
 
 # Serve frontend
 app.use express.static(frontendPath)
