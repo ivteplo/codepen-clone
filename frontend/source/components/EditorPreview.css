@@ -4,4 +4,6 @@
   border: none;
   outline: none;
   border-top: 0.0625rem solid var(--divider);
+  background-color: #fff;
+  color: #000;
 }

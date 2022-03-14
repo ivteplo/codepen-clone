@@ -1,14 +1,19 @@
 # Copyright (c) 2022 Ivan Teplov
 
-import React, { useState, useContext, createContext } from "react"
-import { EditorContext } from "../contexts/EditorContext"
+import React from "react"
 import MonacoEditor from "@monaco-editor/react"
+
+import { EditorContext } from "../contexts/EditorContext"
+import usePreferredMode from "../hooks/usePreferredMode"
+
 import "./Editor.css"
 
 export Editor = ({ initialFile }) ->
-  { files, editorSettings, saveFile } = useContext EditorContext
+  { files, editorSettings, saveFile } = React.useContext EditorContext
+  theme = usePreferredMode()
+  editorTheme = if theme == "light" then "light" else "vs-dark"
 
-  [currentMode, setCurrentMode] = useState initialFile
+  [currentMode, setCurrentMode] = React.useState initialFile
   file = files[currentMode]
 
   onChange = (newCode) ->
@@ -46,6 +51,7 @@ export Editor = ({ initialFile }) ->
       defaultValue={file.value}
       onChange={onChange}
       options={editorSettings}
+      theme={editorTheme}
     />
   </div>
 
