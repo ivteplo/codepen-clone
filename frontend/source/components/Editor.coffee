@@ -1,47 +1,22 @@
 # Copyright (c) 2022 Ivan Teplov
 
 import React, { useState, useContext, createContext } from "react"
+import { EditorContext } from "../contexts/EditorContext"
 import MonacoEditor from "@monaco-editor/react"
+import EditorPreview from "./EditorPreview"
 import "./Editor.css"
 
-defaultContext =
-  files:
-    html:
-      name: "index.html"
-      language: "html"
-      value: "<!-- write your HTML code here -->"
-    css:
-      name: "index.css"
-      language: "css"
-      value: "/* write your CSS code here */"
-    js:
-      name: "main.js"
-      language: "javascript"
-      value: "// write your JavaScript code here"
-  saveFile: () -> return
-
-EditorContext = createContext defaultContext
-
-export EditorContextProvider = ({ children }) ->
-  [ files, setFiles ] = useState defaultContext.files
-
-  saveFile = (mode, contents) ->
-    setFiles {
-      ...files,
-      [mode]: {
-        ...files[mode]
-        value: contents
-      }
-    }
-
-  <EditorContext.Provider value={{ files, saveFile }}>
-    {children}
-  </EditorContext.Provider>
+editorSettings =
+  tabSize: 2
+  fontSize: 14
+  fontFamily: "JetBrains Mono, Hack, Cascadia Code, SF Mono, Consolas, 'Courier New', monospace"
+  fontLigatures: on
+  mouseWheelZoom: on
 
 export Editor = ->
   { files, saveFile } = useContext EditorContext
 
-  [currentMode, setCurrentMode] = useState "html"
+  [currentMode, setCurrentMode] = useState "HTML"
   file = files[currentMode]
 
   onChange = (newCode) ->
@@ -64,19 +39,20 @@ export Editor = ->
               onClick={changeTab.bind(this, key)}
               className="gray"
             >
-              {file.name}
+              {key}
             </button>
         )
       }
     </nav>
     <MonacoEditor
       height="50%"
-      theme="vs-light"
       path={file.name}
       language={file.language}
       value={file.value}
       onChange={onChange}
+      options={editorSettings}
     />
+    <EditorPreview files={files} />
   </div>
 
 export default Editor

@@ -2,7 +2,8 @@
 
 import React from "react"
 import NavigationBar from "./components/NavigationBar"
-import { Editor, EditorContextProvider } from "./components/Editor"
+import { Editor } from "./components/Editor"
+import { EditorContextProvider } from "./contexts/EditorContext"
 
 export App = ->
   <div className="App fill column">

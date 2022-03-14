@@ -1,0 +1,7 @@
+/* Copyright (c) 2022 Ivan Teplov */
+
+.EditorPreview {
+  border: none;
+  outline: none;
+  border-top: 0.0625rem solid var(--divider);
+}
