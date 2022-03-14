@@ -9,31 +9,6 @@ import css from "rollup-plugin-css-only"
 const extensions = [".js", ".coffee"]
 const production = !process.env.ROLLUP_WATCH
 
-function serve() {
-  let server
-
-  function toExit() {
-    if (server) server.kill(0)
-  }
-
-  return {
-    writeBundle() {
-      if (server) return
-      server = require("child_process").spawn(
-        "npm",
-        ["run", "start", "--", "--dev"],
-        {
-          stdio: ["ignore", "inherit", "inherit"],
-          shell: true,
-        }
-      )
-
-      process.on("SIGTERM", toExit)
-      process.on("exit", toExit)
-    },
-  }
-}
-
 export default {
   input: "source/main.coffee",
   output: {
@@ -60,11 +35,6 @@ export default {
 
     injectProcessEnv({
       NODE_ENV: production ? "production" : "development",
-    }),
-
-    !production && serve({
-      contentBase: ["public"],
-      port: 8080
     }),
 
     // Watch the `public` directory and refresh the
