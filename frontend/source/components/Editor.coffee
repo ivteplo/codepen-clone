@@ -50,7 +50,7 @@ export Editor = ->
   changeTab = (mode) ->
     setCurrentMode mode
 
-  <div className="column">
+  <div className="column fill">
     <nav className="EditorTabs row">
       {
         Object.keys(files).map((key) ->
@@ -70,7 +70,7 @@ export Editor = ->
       }
     </nav>
     <MonacoEditor
-      height="90vh"
+      height="50%"
       theme="vs-light"
       path={file.name}
       language={file.language}
