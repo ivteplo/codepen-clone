@@ -14,12 +14,15 @@ export default {
   output: {
     file: "public/build/bundle.js",
     format: "iife",
+    sourcemap: !production
   },
   plugins: [
     coffee({
       transpile: {
-        presets: ["@babel/preset-react"]
-      }
+        presets: ["@babel/preset-react"],
+        sourceMaps: !production
+      },
+      sourceMap: !production
     }),
 
     // we'll extract any component CSS out into
